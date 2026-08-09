@@ -5,6 +5,17 @@
 # lazy.nvim-based configs), a wrapper that isolates nvim's XDG dirs to
 # /nvim/*, uv-managed LSP tools (no Mason), and symlinks nvim/ in this
 # repo to ~/.config/nvim.
+#
+# NOTE: crib's dotfiles plugin runs this as `sh <path>/install.sh`,
+# not `./install.sh` — the shebang above is never consulted, so
+# without this guard it would execute under plain POSIX sh (dash on
+# Debian/Ubuntu), which doesn't understand `pipefail` or
+# `${BASH_SOURCE[0]}` below. Confirmed by reading crib's own source
+# (internal/plugin/dotfiles/plugin.go), not documented anywhere.
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec bash "$0" "$@"
+fi
+
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
