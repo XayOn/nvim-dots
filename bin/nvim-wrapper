@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Installed as /usr/local/bin/nvim. Only affects nvim's own XDG dirs —
+# never touches the ambient XDG_* vars for any other program.
+export XDG_DATA_HOME=/nvim/share
+export XDG_STATE_HOME=/nvim/state
+export XDG_CACHE_HOME=/nvim/cache
+exec /opt/nvim-linux-x86_64/bin/nvim "$@"
